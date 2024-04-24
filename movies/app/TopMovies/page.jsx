@@ -1,6 +1,11 @@
-'use client'
-import {useState} from 'react'
 import '@/styles/styles.css'
+import '@/images/estrella.png'
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+  } from "@/components/ui/accordion"
 
 const options = {
     method: 'GET',
@@ -27,17 +32,72 @@ async function Movies() {
 
     return (
         <div>
-            <h1>Top 5 Rated Movies</h1>
-            <div>
-                {movies.map(movie => (
-                    <div key={movie.id} className="movie">
-                        <h2>{movie.title}</h2>
-                        <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
-                    </div>
-                ))}
+        {movies.map(movie => (
+        <div className="movie">
+            <img src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} alt={movie.title} />
+            <div className="movie-details">
+              <h2>{movie.title}</h2>
+              <Accordion type="single" collapsible>
+                <AccordionItem value="resumen">
+                  <AccordionTrigger className='accordionButton'>Resumen</AccordionTrigger>
+                  <AccordionContent className='accordionText'>
+                    {movie.overview}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="rating">
+                  <AccordionTrigger className='accordionButton'>Rating</AccordionTrigger>
+                  <AccordionContent className='accordionText'>
+                    <img href='@/images/estrella.png'/>
+                    {movie.vote_average}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="releaseDate">
+                  <AccordionTrigger className='accordionButton'>Fecha de lanzamiento</AccordionTrigger>
+                  <AccordionContent className='accordionText'>
+                    {movie.release_date}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
-        </div>
+          </div>  
+        ))}
+        </div>       
     );
 }
 
 export default Movies;
+
+{/*<div>
+            <h1 className="title">Top 5 Rated Movies</h1>
+            <div>
+                {movies.map(movie => (
+                    {/*}
+                    <div key={movie.id} className="movie">
+                        <h2>{movie.title}</h2>
+                        <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
+                        <Accordion type="single" collapsible>
+                            <AccordionItem value="resumen">
+                                <AccordionTrigger>Resumen</AccordionTrigger>
+                                <AccordionContent>
+                                {movie.overview}
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="rating">
+                                <AccordionTrigger>Rating</AccordionTrigger>
+                                <AccordionContent>
+                                {movie.vote_average}
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="releaseDate">
+                                <AccordionTrigger>Fecha de lanzamiento</AccordionTrigger>
+                                <AccordionContent>
+                                {movie.release_date}
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+                    </div>
+
+
+                ))}
+            </div>
+            </div>*/}
